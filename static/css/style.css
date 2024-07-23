@@ -1,0 +1,392 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+:root {
+    --background-color: #686868;
+    --text-color: #D8A859;
+    --popup-background-color: #4F4F4F;
+    --add-button-color: #05FB00;
+    --remove-button-color: #FF0000;
+    --input-bg-color: #888888;
+    --dropdown-bg-color: #686868;
+
+    --table-top-col-bg-color: #404040;
+    --table-col-bg-color: #373737;
+    --table-col-border: #5B5B5B;
+
+}
+* { font-family: "Open Sans", sans-serif; }
+
+body {
+    width: 100%;
+    height: auto;
+    background-color: var(--background-color);
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Header */
+
+.header {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+}
+
+.header-container {
+    width: 1152px;  
+}
+
+.nav-box {
+    width: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 51px;
+    padding-right: 51px;
+    margin: 0px;
+}
+
+.nav-box-left {
+    width: 350px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.nav-box-right {
+    width: 350px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-item {
+    text-align: center;
+}
+
+.logo {
+    margin-right: 66px;
+}
+
+.catalog, .reg {
+    font-weight: 500;
+    font-style: normal;
+    font-size: 24px;
+    color: var(--text-color)
+}
+
+/* popup */
+
+.popup-content {
+    background-color: var(--popup-background-color);
+}
+
+.form_text, .reg_popup_label, .add_car_popup_label, .add_brand_popup_label {
+    color: var(--text-color)
+}
+
+.modal-header {
+    border-bottom: solid var(--background-color);
+}
+
+.modal-footer {
+    border-top: solid var(--background-color);
+}
+
+.form-control {
+    color: var(--text-color);
+    background-color: var(--input-bg-color);
+    border: 0;
+    border-radius: 30px;
+}
+
+.form-control:focus {
+    color: var(--text-color);
+    background-color: var(--input-bg-color);
+    border: 0;
+    outline: 0;
+    box-shadow: none;
+}
+
+.reg, .reg:hover, .reg:focus {
+    color: var(--text-color);
+    background-color: transparent;
+    border: none;
+}
+
+.btn_close, .btn_close:hover, .btn_close:focus{
+    color: var(--remove-button-color);
+    background-color: transparent;
+    border: none;
+}
+
+.btn_add, .btn_add:hover, .btn_add:focus{
+    color: var(--add-button-color);
+    background-color: transparent;
+    border: none;
+}
+
+.reg-box {
+    width: 170px;
+    height: 125px;
+    padding-top: 20px;
+    padding-left: 25px;
+    background-color: var(--dropdown-bg-color);
+}
+
+.reg-item:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.profile, .exit {
+    font-weight: 500;
+    font-style: normal;
+    font-size: 24px;
+    color: var(--text-color)
+}
+/* ============== Main Zone ============== */
+
+.main_zone {
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 70px;
+    display: flex;
+    justify-content: center;
+}
+
+.main_zone-container {
+    width: 1150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.description {
+    width: 800px;
+}
+
+.text-description {
+    font-weight: 500;
+    font-style: normal;
+    font-size: 24px;
+    color: var(--text-color)
+}
+
+.car_view-zone {
+    margin-top: 55px;
+}
+
+.car_view-zone-up {
+    display: flex;
+    flex-direction: row;
+}
+
+.car_view-zone-down {
+    display: flex;
+    flex-direction: row;
+    margin-top: 55px;
+}
+
+.car_view {
+    width: 250px;
+    height: 300px;
+    background-color: #D9D9D9;
+}
+
+.car_view:not(:last-child) {
+    margin-right: 44px;
+}
+
+/* catalog */
+
+.brand-container {
+    display: flex;
+}
+
+.brand_list-container {
+    width: 200px;
+    height: 400px;
+    margin-right: 70px;
+}
+
+.brand_view-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.brand_list {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand_item {
+    font-weight: 500;
+    font-style: normal;
+    font-size: 24px;
+    color: var(--text-color)
+}
+
+/* profile */
+
+.profile-container {
+    display: flex;
+    width: 100%;
+    height: 665px;
+    justify-content: space-between;
+}
+
+.profile-name {
+    font-weight: 500;
+    font-style: normal;
+    font-size: 32px;
+    color: var(--text-color);
+    margin-bottom: 40px;
+}
+
+.profile-info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avatar-container {
+    width: 250px;
+    height: 300px;
+    background-color: #D9D9D9;
+    border-radius: 30px;
+
+}
+
+/* admin panel */
+
+.table-zone {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 665px;
+}
+
+.car_table-container {
+    width: 650px;
+    margin-top: 50px;
+    margin-bottom: 70px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.brand_table-container {
+    width: 320;
+    margin-top: 50px;
+    margin-bottom: 70px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.table-name {
+    font-weight: 500;
+    font-style: normal;
+    font-size: 32px;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.table-columns {
+    display: flex;
+    background-color: var(--table-col-bg-color);
+}
+
+.top-table {
+    background-color: var(--table-top-col-bg-color);
+}
+
+.columns {
+    width: 130px;
+    height: 36px;
+    padding: 5px;
+    text-align: center;
+    color: var(--text-color);
+    border: .5px solid var(--table-col-border);
+}
+
+.top-info {
+    color: white
+}
+
+.remove-car, .remove-car:hover, .remove-car:focus{
+    color: var(--remove-button-color);
+    background-color: transparent;
+    border: none;
+}
+
+.add_car, .add_car:hover, .add_car:focus{
+    color: var(--add-button-color);
+    background-color: transparent;
+    border: none;
+}
+
+.description-col {
+    width: 160px;
+}
+
+.car-popup-main-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.popup_car_date {
+    width: 250px;
+}
+
+
+
+.description-input {
+    height: 300px;
+}
+
+.brand-name {
+    width: 250px;
+}
+
+/* ======================================= */
+
+
+
+/* Footer */
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-container {
+    width: 1152px;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-nav-box {
+    width: 350px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
