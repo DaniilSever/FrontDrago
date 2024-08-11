@@ -1,1 +1,0 @@
-sh src/run_fastapi.sh
