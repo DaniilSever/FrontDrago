@@ -1,5 +1,4 @@
-from fastapi import APIRouter, Path, Body, Query
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, Path, Body
 from .deps import AAccountUC
 
 from .dto import UUID4, QCreateAccount, QUpdateAccount

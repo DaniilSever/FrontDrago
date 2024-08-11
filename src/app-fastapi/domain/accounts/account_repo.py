@@ -1,6 +1,6 @@
-import asyncpg
+# import asyncpg
 from pydantic_settings import BaseSettings
-from contextlib import asynccontextmanager
+# from contextlib import asynccontextmanager
 from uuid import UUID
 from .dto import QCreateAccount, QUpdateAccount, UUID4
 from .dto import XOk, XAccount, XAccountCreated
