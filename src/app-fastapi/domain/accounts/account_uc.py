@@ -1,26 +1,54 @@
 from dto import QAccount, QCreateAccount, QUpdateAccount
+from dto import XAccount, XAccountCreated, XOk
 from dto import ZAccount, ZAccountList, ZOk, ZError
 from account_irep import IrepAccount
 
 class AccountUseCase:
-    
-    def __init__(self, repo: IrepAccount) -> None:
+    async def __init__(self, repo: IrepAccount) -> None:
         self._repo: IrepAccount = repo
 
-    def get_all_accounts(self) -> ZAccountList:
-        pass 
+    async def get_all_accounts(self) -> ZAccountList:
+        accounts = self._repo.get_all_accounts()
+        items = [ZAccount(**el) for el in accounts]
+        return ZAccountList(count=len(accounts), items=items) 
 
-    def get_account_by_id(self, account_id: QAccount) -> dict:
-        pass
+    async def get_account_by_id(self, uid: QAccount) -> ZAccount | ZError:
+        try:
+            account: XAccount = await self._repo.get_account_by_id(uid)
+        except KeyError as e:
+            raise ZError(message=str(e))
+        except ValueError as e:
+            raise ZError(message=str(e))
+        return ZAccount(*account)
 
-    def create_account(self, req: QCreateAccount) -> ZOk | ZError:
-        pass
+    async def create_account(self, req: QCreateAccount) -> ZOk | ZError:
+        try:
+            uid = await self._repo.create_account(req)
+        except KeyError as e:
+            raise ZError(message=str(e))
+        return ZAccount(uid=uid, *req)
     
-    def put_account(self, account_id: QAccount, req: QUpdateAccount) -> ZOk | ZError:
-        pass
+    async def put_account(self, account_id: QAccount, req: QUpdateAccount) -> ZOk | ZError:
+        try:
+            res = await self._repo.update_account(account_id, req)
+        except KeyError as e:
+            raise ZError(message=str(e))
+        except ValueError as e:
+            raise ZError(message=str(e))
+        return ZOk(message=res.message)
 
-    def patch_account(self, account_id: QAccount, req: QUpdateAccount) -> ZOk | ZError:
-        pass
+    async def patch_account(self, account_id: QAccount, req: QUpdateAccount) -> ZOk | ZError:
+        try:
+            res = await self._repo.update_account(account_id, req)
+        except KeyError as e:
+            raise ZError(message=str(e))
+        except ValueError as e:
+            raise ZError(message=str(e))
+        return ZOk(message=res.message)
 
-    def delete_account(self, account_id: QAccount) -> ZOk | ZError:
-        pass
+    async def delete_account(self, account_id: QAccount) -> ZOk | ZError:
+        try:
+            res: XOk = await self._repo.delete_account(account_id)
+        except KeyError as e:
+            raise ZError(message=str(e))
+        return ZOk(message=res.message)

@@ -1,20 +1,20 @@
 from typing import Protocol
 from dto import QAccount, QCreateAccount, QUpdateAccount
-from dto import XOk, XError
+from dto import XOk, XAccountCreated
 
 class IrepAccount(Protocol):
     
-    def get_all_accounts(self) -> list:
+    async def get_all_accounts(self) -> list:
         raise NotImplementedError
 
-    def get_account_by_id(self, account_id: QAccount) -> dict:
+    async def get_account_by_id(self, uid: QAccount) -> dict:
         raise NotImplementedError
     
-    def create_account(self, req: QCreateAccount) -> XOk | XError:
+    async def create_account(self, req: QCreateAccount) -> XAccountCreated:
         raise NotImplementedError
     
-    def update_account(self, account_id: QAccount, req: QUpdateAccount) -> XOk | XError:
+    async def update_account(self, uid: QAccount, req: QUpdateAccount) -> XOk:
         raise NotImplementedError
     
-    def delete_account(self, account_id: QAccount) -> XOk | XError:
+    async def delete_account(self, uid: QAccount) -> XOk:
         raise NotImplementedError

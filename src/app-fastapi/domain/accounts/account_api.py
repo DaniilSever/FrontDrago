@@ -5,4 +5,4 @@ prefix = "/api/v1/accounts"
 router = APIRouter(prefix=prefix, tags=["accounts"])
 
 @router.get("/")
-def get_all_accounts():
+def get_all_accounts(): pass
