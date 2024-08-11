@@ -1,8 +1,8 @@
 import asyncpg
 from pydantic_settings import BaseSettings
 from contextlib import asynccontextmanager
-
-from .dto import QAccount, QCreateAccount, QUpdateAccount
+from uuid import UUID
+from .dto import QCreateAccount, QUpdateAccount, UUID4
 from .dto import XOk, XAccount, XAccountCreated
 
 class AccountRepo:
@@ -48,26 +48,26 @@ class AccountRepo:
 
         return [ # TODO: ЭТО ТЕСТОВАЯ ЗАЛУПА ИБО БД НЕ ПОДКЛЮЧЕНА
             {
-                "uid": "123e4567-e89b-12d3-a456-426614174000",
+                "uid": UUID("592af5b5-4f60-4ddd-b080-be674c82eda8"),
                 "email": "example@example.com",
                 "name": "username",
                 "password": "password123",
             },
             {
-                "uid": "234e5678-e89b-12d3-a456-426614174001",
+                "uid": UUID("592af5b5-4f60-4ddd-b080-be674c82eda8"),
                 "email": "example2@example.com",
                 "name": "username",
                 "password": "password456",
             },
             {
-                "uid": "345e6789-e89b-12d3-a456-426614174002",
+                "uid": UUID("592af5b5-4f60-4ddd-b080-be674c82eda8"),
                 "email": "example3@example.com",
                 "name": "username",
                 "password": "password789",
             },
         ]
 
-    async def get_account_by_id(self, req: QAccount) -> XAccount:
+    async def get_account_by_id(self, req: UUID4) -> XAccount:
         # запрос в бд
         # async with self.pool as p, p.acquire() as cn:
         #     conn: asyncpg.Connection = cn
@@ -120,7 +120,7 @@ class AccountRepo:
             uid="123e4567-e89b-12d3-a456-426614174000",
         )
     
-    async def update_account(self, uid: QAccount, req: QUpdateAccount) -> XOk:
+    async def update_account(self, uid: UUID4, req: QUpdateAccount) -> XOk:
         # запрос в бд
         # async with self.pool as p, p.acquire() as cn:
         #     conn: asyncpg.Connection = cn
@@ -146,7 +146,7 @@ class AccountRepo:
 
         return XOk(message="success") # TODO: ЭТО ТЕСТОВАЯ ЗАЛУПА ИБО БД НЕ ПОДКЛЮЧЕНА
     
-    async def delete_account(self, uid: QAccount) -> XOk:
+    async def delete_account(self, uid: UUID4) -> XOk:
         # запрос в бд
         # async with self.pool as p, p.acquire() as cn:
         #     conn: asyncpg.Connection = cn

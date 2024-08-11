@@ -2,10 +2,10 @@ from fastapi import Depends
 from typing import Annotated
 from .account_uc import AccountUseCase
 from .account_repo import AccountRepo
-from .config import AConfig
+from .config import get_config
 
 async def account_uc() -> AccountUseCase:
-    cfg = AConfig
+    cfg = get_config()
     repo = AccountRepo(cfg)
     return AccountUseCase(repo)
 

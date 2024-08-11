@@ -15,6 +15,3 @@ class Config(BaseSettings):
 
 def get_config():
     return Config()  # pragma: no cover
-
-
-AConfig = Annotated[Config, Depends(get_config)]

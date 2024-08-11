@@ -17,17 +17,6 @@ class QCreateAccount(BaseModel):
         }
     )
 
-class QAccount(BaseModel):
-    uid: UUID4
-
-    model_config = ConfigDict(
-        json_schema_extra = {
-            "example": {
-                "uid": "123e4567-e89b-12d3-a456-426614174000",
-            }
-        }
-    )
-
 class QUpdateAccount(BaseModel):
     email: EmailStr
     name: str
