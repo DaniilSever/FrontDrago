@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 from .deps import AAccountUC, InvalidUidException, AccountNotFoundException, EmailBusyException
 
-from .dto import UUID4, QCreateAccount, QUpdateAccount
+from .dto import QCreateAccount, QUpdateAccount
 from .dto import ZAccount, ZAccountList, ZOk, ZError
 
 prefix = "/api/v1/accounts"
@@ -22,7 +22,7 @@ async def get_all_accounts(uc: AAccountUC):
             422: {"model": ZError}
         }
 )
-async def get_account_by_id(uc: AAccountUC, uid: UUID4 = Path(...)):
+async def get_account_by_id(uc: AAccountUC, uid: str = Path(...)):
     try:
         acc: ZAccount | ZError = await uc.get_account_by_id(uid)
     except InvalidUidException as e:
@@ -51,7 +51,7 @@ async def create_account(uc: AAccountUC, req: QCreateAccount = Body(...)):
             422: {"model": ZError}
         }
 )
-async def put_account(uc: AAccountUC, uid: UUID4 = Path(...), req: QUpdateAccount = Body(...)):
+async def put_account(uc: AAccountUC, uid: str = Path(...), req: QUpdateAccount = Body(...)):
     try:
         res: ZOk | ZError = await uc.put_account(uid, req)
     except InvalidUidException as e:
@@ -68,7 +68,7 @@ async def put_account(uc: AAccountUC, uid: UUID4 = Path(...), req: QUpdateAccoun
             422: {"model": ZError}
         }
 )
-async def patch_account(uc: AAccountUC, uid: UUID4 = Path(...), req: QUpdateAccount = Body(...)):
+async def patch_account(uc: AAccountUC, uid: str = Path(...), req: QUpdateAccount = Body(...)):
     try:
         res: ZOk | ZError = await uc.patch_account(uid, req)
     except InvalidUidException as e:
@@ -82,7 +82,7 @@ async def patch_account(uc: AAccountUC, uid: UUID4 = Path(...), req: QUpdateAcco
         response_model=ZOk, 
         responses={422: {"model": ZError}}
 )
-async def delete_account(uc: AAccountUC, uid: UUID4 = Path(...)):
+async def delete_account(uc: AAccountUC, uid: str = Path(...)):
     try:
         res: ZOk | ZError = await uc.delete_account(uid)
     except InvalidUidException as e:

@@ -2,12 +2,12 @@ from pydantic_settings import BaseSettings
 
 class Config(BaseSettings):
     # какой-то конфиг для приложения
-    APP_ENV: str = "development"
+    APP_ENV: str
     # ------------------------------
-    POSTGRES_DBN: str = "my_app_db"
-    POSTGRES_USER: str = "my_app_user"
-    POSTGRES_PASSWORD: str = "my_app_password"
-    POSTGRES_HOST: str = "localhost"
+    POSTGRES_DBN: str
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
+    POSTGRES_HOST: str
     POSTGRES_PORT: str = "5432"
 
 

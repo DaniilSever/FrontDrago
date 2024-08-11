@@ -18,16 +18,7 @@ class AccountUseCase:
 
     async def get_all_accounts(self) -> ZAccountList:
         accounts = await self._repo.get_all_accounts()
-        # items = [ZAccount(**el) for el in accounts] # если работает бд
-        items = [
-            ZAccount(
-                uid=el["uid"],
-                email=el["email"],
-                name=el["name"],
-                password=el["password"]
-            )
-            for el in accounts
-        ]
+        items = [ZAccount(**el) for el in accounts]
         return ZAccountList(count=len(accounts), items=items) 
 
     async def get_account_by_id(self, uid: UUID4) -> ZAccount:

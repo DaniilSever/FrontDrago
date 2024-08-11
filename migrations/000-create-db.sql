@@ -14,6 +14,7 @@ CREATE TABLE accounts
     uid          uuid PRIMARY KEY   DEFAULT uuid_generate_v4(),
     email        VARCHAR(255) NULL UNIQUE,
     name         VARCHAR(255) NULL,
+    password     VARCHAR(255) NULL,
     created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updated_at   TIMESTAMP NULL,
     deleted_at   TIMESTAMP NULL,
