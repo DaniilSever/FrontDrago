@@ -5,6 +5,7 @@ from uuid import UUID
 from .dto import QCreateAccount, QUpdateAccount, UUID4
 from .dto import XOk, XAccount, XAccountCreated
 
+from random import randint
 class AccountRepo:
     
     def __init__(self, cfg: BaseSettings):
@@ -90,13 +91,19 @@ class AccountRepo:
 
         #     return XAccount(*account)
 
-        return XAccount( # TODO: ЭТО ТЕСТОВАЯ ЗАЛУПА ИБО БД НЕ ПОДКЛЮЧЕНА
-            uid="123e4567-e89b-12d3-a456-426614174000",
-            email="example@example.com",
-            name="username",
-            password="password123",
-        )
-    
+        match randint(0, 2): # TODO: ЭТО ТЕСТОВАЯ ЗАЛУПА ИБО БД НЕ ПОДКЛЮЧЕНА
+            case 0:
+                raise KeyError("invalid uid") 
+            case 1:
+                return XAccount(
+                    uid=UUID("592af5b5-4f60-4ddd-b080-be674c82eda8"),
+                    email="example@example.com",
+                    name="username",
+                    password="password123",
+                )
+            case 2:
+                raise ValueError("account not found")
+
     async def create_account(self, req: QCreateAccount) -> XAccountCreated:
         # запрос в бд
         # async with self.pool as p, p.acquire() as cn:
@@ -115,10 +122,14 @@ class AccountRepo:
         #     except asyncpg.exceptions.UniqueViolationError:
         #         raise KeyError("email busy")
         #     return XAccountCreated(uid=uid)
-        
-        return XAccountCreated( # TODO: ЭТО ТЕСТОВАЯ ЗАЛУПА ИБО БД НЕ ПОДКЛЮЧЕНА
-            uid="123e4567-e89b-12d3-a456-426614174000",
-        )
+
+        match randint(0, 1): # TODO: ЭТО ТЕСТОВАЯ ЗАЛУПА ИБО БД НЕ ПОДКЛЮЧЕНА
+            case 0:
+                raise KeyError("email busy")
+            case 1:
+                return XAccountCreated( 
+                    uid=UUID("592af5b5-4f60-4ddd-b080-be674c82eda8"),
+                )
     
     async def update_account(self, uid: UUID4, req: QUpdateAccount) -> XOk:
         # запрос в бд
@@ -144,7 +155,15 @@ class AccountRepo:
         #     else:
         #         return XOk
 
-        return XOk(message="success") # TODO: ЭТО ТЕСТОВАЯ ЗАЛУПА ИБО БД НЕ ПОДКЛЮЧЕНА
+        match randint(0, 2): # TODO: ЭТО ТЕСТОВАЯ ЗАЛУПА ИБО БД НЕ ПОДКЛЮЧЕНА
+            case 0:
+                raise KeyError("invalid uid") 
+            case 1:
+                return XOk(message="success")
+            case 2:
+                raise ValueError("account not found")
+
+        
     
     async def delete_account(self, uid: UUID4) -> XOk:
         # запрос в бд
@@ -166,4 +185,8 @@ class AccountRepo:
         #     else:
         #         return XOk
 
-        return XOk(message="success") # TODO: ЭТО ТЕСТОВАЯ ЗАЛУПА ИБО БД НЕ ПОДКЛЮЧЕНА
+        match randint(0, 1): # TODO: ЭТО ТЕСТОВАЯ ЗАЛУПА ИБО БД НЕ ПОДКЛЮЧЕНА
+            case 0:
+                raise KeyError("invalid uid") 
+            case 1:
+                return XOk(message="success")
