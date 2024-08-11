@@ -1,6 +1,7 @@
-from flask import Flask
+from fastapi import FastAPI
+from .domain import routers
 
-app = Flask(__name__)
+app = FastAPI()
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+for router in routers:
+    app.include_router(router)
