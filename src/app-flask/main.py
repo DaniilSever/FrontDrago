@@ -16,7 +16,3 @@ app.add_url_rule("/api/v1/accounts/", endpoint="create_account", view_func=creat
 app.add_url_rule("/api/v1/accounts/<uuid:uid>", endpoint="put_account", view_func=put_account, methods=["PUT"])
 app.add_url_rule("/api/v1/accounts/<uuid:uid>", endpoint="patch_account", view_func=patch_account, methods=["PATCH"])
 app.add_url_rule("/api/v1/accounts/<uuid:uid>", endpoint="delete_account", view_func=delete_account, methods=["DELETE"])
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000, debug=True)

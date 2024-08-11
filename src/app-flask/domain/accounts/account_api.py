@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from .deps import account_uc, AccountUseCase, InvalidUidException, AccountNotFoundException, EmailBusyException
 
 from .dto import UUID4, QCreateAccount, QUpdateAccount
@@ -22,7 +22,8 @@ def get_account_by_id(uid: UUID4, uc: AccountUseCase = account_uc()):
     return acc.model_dump(mode="json")
 
 @app.endpoint("create_account")
-def create_account(req: QCreateAccount, uc: AccountUseCase = account_uc()):
+def create_account(uc: AccountUseCase = account_uc()):
+    req = QCreateAccount(**request.json)
     try:
         acc: ZAccount =  uc.create_account(req)
     except EmailBusyException as e:
@@ -30,9 +31,10 @@ def create_account(req: QCreateAccount, uc: AccountUseCase = account_uc()):
     return acc.model_dump(mode="json")
 
 @app.endpoint("put_account")
-def put_account(uid: UUID4, req: QUpdateAccount, uc: AccountUseCase = account_uc()):
+def put_account(uid: UUID4, uc: AccountUseCase = account_uc()):
+    req = QUpdateAccount(**request.json)
     try:
-        res: ZOk | ZError =  uc.put_account(uid, req)
+        res: ZOk =  uc.put_account(uid, req)
     except InvalidUidException as e:
         return ZError(message=str(e), status_code=422).model_dump(mode="json")
     except AccountNotFoundException as e:
@@ -40,19 +42,22 @@ def put_account(uid: UUID4, req: QUpdateAccount, uc: AccountUseCase = account_uc
     return res.model_dump(mode="json")
 
 @app.endpoint("patch_account")
-def patch_account(uid: UUID4, req: QUpdateAccount, uc: AccountUseCase = account_uc()):
+def patch_account(uid: UUID4, uc: AccountUseCase = account_uc()):
+    req = QUpdateAccount(**request.json)
     try:
-        res: ZOk | ZError =  uc.patch_account(uid, req)
+        res: ZOk =  uc.patch_account(uid, req)
     except InvalidUidException as e:
-        return ZError(message=str(e), status_code=422)
+        return ZError(message=str(e), status_code=422).model_dump(mode="json")
+
     except AccountNotFoundException as e:
-        return ZError(message=str(e), status_code=422)
+        return ZError(message=str(e), status_code=422).model_dump(mode="json")
+
     return res.model_dump(mode="json")
 
 @app.endpoint("delete_account")
 def delete_account(uid: UUID4, uc = account_uc()):
     try:
-        res: ZOk | ZError =  uc.delete_account(uid)
+        res: ZOk =  uc.delete_account(uid)
     except InvalidUidException as e:
         return ZError(message=str(e), status_code=422).model_dump(mode="json")
     return res.model_dump(mode="json")
