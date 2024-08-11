@@ -2,18 +2,9 @@
 __pycache__/
 *.py[cod]
 *$py.class
-my_ex.py
-
-.mypy_cache
-.ruff_cache
-
 
 # C extensions
 *.so
-
-.vscode/*
-.idea/*
-site/
 
 # Distribution / packaging
 .Python
@@ -34,9 +25,6 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-my/
-src/profiles/html/*.html
-src/profiles/json/*.json
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -102,7 +90,7 @@ ipython_config.py
 # pipenv
 #   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
 #   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don"t work, or not
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
 #   install all needed dependencies.
 #Pipfile.lock
 
@@ -133,23 +121,12 @@ celerybeat.pid
 
 # Environments
 .env
-.env.local
-.env.local2
-.env.develop
-.env.develop_old
-vault-dev.json
-.env.prod
-.env.main
-.env.cloud
 .venv
 env/
 venv/
 ENV/
 env.bak/
 venv.bak/
-curl.py
-
-**/.~*
 
 # Spyder project settings
 .spyderproject
