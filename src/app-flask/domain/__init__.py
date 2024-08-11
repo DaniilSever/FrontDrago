@@ -1,9 +1,17 @@
-from .accounts.account_api import router as account_api
-
-routers =[
-    account_api,
-]
+from .accounts.account_api import (
+    get_all_accounts,
+    get_account_by_id,
+    create_account,
+    put_account,
+    patch_account,
+    delete_account,
+)
 
 __all__ = [
-    routers
+    get_all_accounts,
+    get_account_by_id,
+    create_account,
+    put_account,
+    patch_account,
+    delete_account,
 ]

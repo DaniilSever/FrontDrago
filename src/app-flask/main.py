@@ -1,7 +1,22 @@
-from fastapi import FastAPI
-from .domain import routers
+from flask import Flask
+from .domain import (
+    get_all_accounts,
+    get_account_by_id,
+    create_account,
+    put_account,
+    patch_account,
+    delete_account,
+)
 
-app = FastAPI()
+app = Flask(__name__)
 
-for router in routers:
-    app.include_router(router)
+app.add_url_rule("/api/v1/accounts/", endpoint="get_all_accounts", view_func=get_all_accounts, methods=["GET"])
+app.add_url_rule("/api/v1/accounts/<uuid:uid>", endpoint="get_account_by_id", view_func=get_account_by_id, methods=["GET"])
+app.add_url_rule("/api/v1/accounts/", endpoint="create_account", view_func=create_account, methods=["POST"])
+app.add_url_rule("/api/v1/accounts/<uuid:uid>", endpoint="put_account", view_func=put_account, methods=["PUT"])
+app.add_url_rule("/api/v1/accounts/<uuid:uid>", endpoint="patch_account", view_func=patch_account, methods=["PATCH"])
+app.add_url_rule("/api/v1/accounts/<uuid:uid>", endpoint="delete_account", view_func=delete_account, methods=["DELETE"])
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8000, debug=True)

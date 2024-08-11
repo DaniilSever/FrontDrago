@@ -96,6 +96,7 @@ class ZOk(BaseModel):
 class ZError(BaseModel):
     status: str = "error"
     message: str
+    status_code: int
 
     model_config = ConfigDict(
         json_schema_extra = {

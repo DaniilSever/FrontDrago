@@ -1,90 +1,58 @@
-from fastapi import APIRouter, Path, Body
-from fastapi.responses import JSONResponse
-from fastapi.encoders import jsonable_encoder
-from .deps import AAccountUC, InvalidUidException, AccountNotFoundException, EmailBusyException
+from flask import Flask
+from .deps import account_uc, AccountUseCase, InvalidUidException, AccountNotFoundException, EmailBusyException
 
 from .dto import UUID4, QCreateAccount, QUpdateAccount
 from .dto import ZAccount, ZAccountList, ZOk, ZError
 
-prefix = "/api/v1/accounts"
-router = APIRouter(prefix=prefix, tags=["accounts"])
+app = Flask(__name__)
 
-@router.get("/", response_model=ZAccountList)
-async def get_all_accounts(uc: AAccountUC): 
-    acclist: ZAccountList = await uc.get_all_accounts()
-    return acclist
+@app.endpoint("get_all_accounts")
+def get_all_accounts(uc: AccountUseCase = account_uc()): 
+    acclist: ZAccountList =  uc.get_all_accounts()
+    return acclist.model_dump(mode="json")
 
-@router.get(
-        "/{uid}", 
-        response_model=ZAccount, 
-        responses={
-            404: {"model": ZError}, 
-            422: {"model": ZError}
-        }
-)
-async def get_account_by_id(uc: AAccountUC, uid: UUID4 = Path(...)):
+@app.endpoint("get_account_by_id")
+def get_account_by_id(uid: UUID4, uc: AccountUseCase = account_uc()):
     try:
-        acc: ZAccount | ZError = await uc.get_account_by_id(uid)
+        acc: ZAccount | ZError =  uc.get_account_by_id(uid)
     except InvalidUidException as e:
-        return JSONResponse(content=jsonable_encoder(ZError(message=str(e))), status_code=422)
+        return ZError(message=str(e), status_code=422).model_dump(mode="json")
     except AccountNotFoundException as e:
-        return JSONResponse(content=jsonable_encoder(ZError(message=str(e))), status_code=404)
-    return acc
+        return ZError(message=str(e), status_code=404).model_dump(mode="json")
+    return acc.model_dump(mode="json")
 
-@router.post(
-        "/", 
-        response_model=ZAccount, 
-        responses={400: {"model": ZError}}
-)
-async def create_account(uc: AAccountUC, req: QCreateAccount = Body(...)):
+@app.endpoint("create_account")
+def create_account(req: QCreateAccount, uc: AccountUseCase = account_uc()):
     try:
-        acc: ZAccount = await uc.create_account(req)
+        acc: ZAccount =  uc.create_account(req)
     except EmailBusyException as e:
-        return JSONResponse(content=jsonable_encoder(ZError(message=str(e))), status_code=400)
-    return acc
+        return ZError(message=str(e), status_code=400).model_dump(mode="json")
+    return acc.model_dump(mode="json")
 
-@router.put(
-        "/{uid}", 
-        response_model=ZOk, 
-        responses={
-            404: {"model": ZError}, 
-            422: {"model": ZError}
-        }
-)
-async def put_account(uc: AAccountUC, uid: UUID4 = Path(...), req: QUpdateAccount = Body(...)):
+@app.endpoint("put_account")
+def put_account(uid: UUID4, req: QUpdateAccount, uc: AccountUseCase = account_uc()):
     try:
-        res: ZOk | ZError = await uc.put_account(uid, req)
+        res: ZOk | ZError =  uc.put_account(uid, req)
     except InvalidUidException as e:
-        return JSONResponse(content=jsonable_encoder(ZError(message=str(e))), status_code=422)
+        return ZError(message=str(e), status_code=422).model_dump(mode="json")
     except AccountNotFoundException as e:
-        return JSONResponse(content=jsonable_encoder(ZError(message=str(e))), status_code=404)
-    return res
+        return ZError(message=str(e), status_code=404).model_dump(mode="json")
+    return res.model_dump(mode="json")
 
-@router.patch(
-        "/{uid}", 
-        response_model=ZOk, 
-        responses={
-            404: {"model": ZError}, 
-            422: {"model": ZError}
-        }
-)
-async def patch_account(uc: AAccountUC, uid: UUID4 = Path(...), req: QUpdateAccount = Body(...)):
+@app.endpoint("patch_account")
+def patch_account(uid: UUID4, req: QUpdateAccount, uc: AccountUseCase = account_uc()):
     try:
-        res: ZOk | ZError = await uc.patch_account(uid, req)
+        res: ZOk | ZError =  uc.patch_account(uid, req)
     except InvalidUidException as e:
-        return JSONResponse(content=jsonable_encoder(ZError(message=str(e))), status_code=422)
+        return ZError(message=str(e), status_code=422)
     except AccountNotFoundException as e:
-        return JSONResponse(content=jsonable_encoder(ZError(message=str(e))), status_code=404)
-    return res
+        return ZError(message=str(e), status_code=422)
+    return res.model_dump(mode="json")
 
-@router.delete(
-        "/{uid}", 
-        response_model=ZOk, 
-        responses={422: {"model": ZError}}
-)
-async def delete_account(uc: AAccountUC, uid: UUID4 = Path(...)):
+@app.endpoint("delete_account")
+def delete_account(uid: UUID4, uc = account_uc()):
     try:
-        res: ZOk | ZError = await uc.delete_account(uid)
+        res: ZOk | ZError =  uc.delete_account(uid)
     except InvalidUidException as e:
-        return JSONResponse(content=jsonable_encoder(ZError(message=str(e))), status_code=422)
-    return res
+        return ZError(message=str(e), status_code=422).model_dump(mode="json")
+    return res.model_dump(mode="json")

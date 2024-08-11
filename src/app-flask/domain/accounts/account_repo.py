@@ -23,7 +23,7 @@ class AccountRepo:
     # асинхронный контекстный менеджер для получения соединения с БД
     # @property
     # @asynccontextmanager
-    # async def pool(self):
+    # def pool(self):
     #     if not self._pool:
     #         self._pool = await asyncpg.create_pool(
     #             self.dsn, min_size=1, max_size=2, max_inactive_connection_lifetime=500.0
@@ -31,9 +31,9 @@ class AccountRepo:
     #     yield self._pool
 
 
-    async def get_all_accounts(self) -> list:
+    def get_all_accounts(self) -> list:
         # запрос в бд
-        # async with self.pool as p, p.acquire() as cn:
+        # with self.pool as p, p.acquire() as cn:
         #     conn: asyncpg.Connection = cn
         #     q = """
         #     SELECT 
@@ -68,9 +68,9 @@ class AccountRepo:
             },
         ]
 
-    async def get_account_by_id(self, req: UUID4) -> XAccount:
+    def get_account_by_id(self, req: UUID4) -> XAccount:
         # запрос в бд
-        # async with self.pool as p, p.acquire() as cn:
+        # with self.pool as p, p.acquire() as cn:
         #     conn: asyncpg.Connection = cn
         #     q = """
         #         SELECT 
@@ -104,9 +104,9 @@ class AccountRepo:
             case 2:
                 raise ValueError("account not found")
 
-    async def create_account(self, req: QCreateAccount) -> XAccountCreated:
+    def create_account(self, req: QCreateAccount) -> XAccountCreated:
         # запрос в бд
-        # async with self.pool as p, p.acquire() as cn:
+        # with self.pool as p, p.acquire() as cn:
         #     conn: asyncpg.Connection = cn
         #     q = """
         #         INSERT INTO accounts (
@@ -131,9 +131,9 @@ class AccountRepo:
                     uid=UUID("592af5b5-4f60-4ddd-b080-be674c82eda8"),
                 )
     
-    async def update_account(self, uid: UUID4, req: QUpdateAccount) -> XOk:
+    def update_account(self, uid: UUID4, req: QUpdateAccount) -> XOk:
         # запрос в бд
-        # async with self.pool as p, p.acquire() as cn:
+        # with self.pool as p, p.acquire() as cn:
         #     conn: asyncpg.Connection = cn
         #     q = """
         #         UPDATE accounts 
@@ -165,9 +165,9 @@ class AccountRepo:
 
         
     
-    async def delete_account(self, uid: UUID4) -> XOk:
+    def delete_account(self, uid: UUID4) -> XOk:
         # запрос в бд
-        # async with self.pool as p, p.acquire() as cn:
+        # with self.pool as p, p.acquire() as cn:
         #     conn: asyncpg.Connection = cn
         #     q = """
         #         DELETE
